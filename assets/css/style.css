@@ -47,10 +47,18 @@ p {
 	align-items: center;
 }
 
+.title {
+	height: 50px;
+}
+
 .char,
 .enemy,
 .defender {
 	height: 150px;
+}
+
+.title-text {
+	padding-left: 18px;
 }
 
 .gen-row {

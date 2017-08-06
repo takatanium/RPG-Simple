@@ -3,6 +3,9 @@
 
 $(document).ready(function(){
 
+	//load initial screen
+	action.reset();
+
   //choose fighter
   $('#char_row').on('click', '.char-box', function() {
   	player = this.id;
@@ -16,15 +19,13 @@ $(document).ready(function(){
 	});
 
 	$('#fight_btn').on('click', function() {
-		console.log(player);
-		console.log(defender);
 		if (player != "" && defender != "" && $("#"+player).attr('hp') > 0) {
 			var playEl = "#" + player;
 			var defEl = "#" + defender;
 
 			//first decrement defender HP and see if still alive
 			if (action.decDefHP(playEl, defEl) > 0) {
-				if (action.decPlayHP(playEl, defEl) < 0) {
+				if (action.decPlayHP(playEl, defEl) <= 0) {
 					//game over
 					action.displayInfo(playEl, defEl, "lost");	
 				} 
@@ -70,7 +71,6 @@ var shift = {
 				if (this === fighter) {
 					$('#defender_row').append(this);
 					defender = this.id;
-					// console.log(this.id);
 					action.displayInfo(player, defender, "clear");
 				}
 			});
@@ -101,7 +101,7 @@ var action = {
 		var playHP = $(playEl).attr("hp");
 		var defCP = $(defEl).attr("cp");
 
-		var intPlayHP = parseInt(playHP) - parseInt(defCP);
+		var intPlayHP = Math.max((parseInt(playHP) - parseInt(defCP)), 0);
 		$(playEl).attr("hp", intPlayHP);
 
 		return intPlayHP;
@@ -163,10 +163,10 @@ var action = {
 		$('.gen-row').html("");
 
 		//regenerate characters
-		$('#char_row').append(make.ryu.elem());
-		$('#char_row').append(make.ken.elem());
-		$('#char_row').append(make.blanka.elem());
-		$('#char_row').append(make.vega.elem());
+		$('#char_row').append(make.elem("ryu"));
+		$('#char_row').append(make.elem("ken"));
+		$('#char_row').append(make.elem("blanka"));
+		$('#char_row').append(make.elem("vega"));
 
 		//clear info 
 		$('#info').html("");
@@ -179,103 +179,56 @@ var make = {
 		ap: "7",
 		inc: "7",
 		cp: "20",
-		elem: function() {
-			var hpTag = $('<p>').attr('id','ryu_hp');
-			hpTag.text(this.hp);
-			var nameTag = $('<p>').attr('id', 'char_col');
-			nameTag.text("R Y U");
-			var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/ryu.jpg');
-			var rowTag = $('<div>').addClass('char-row').attr('id', 'char_row');
-			var divTag = $('<div>').addClass('char-box').attr('id','ryu');
-			divTag.attr('hp', this.hp);
-			divTag.attr('ap', this.ap);
-			divTag.attr('inc', this.inc);
-			divTag.attr('cp', this.cp);
-
-			rowTag.append(imgTag);
-			rowTag.append(nameTag);
-			divTag.append(rowTag);
-			divTag.append(hpTag);
-
-			return divTag;
-		}
 	},
 	ken: {
 		hp: "160",
 		ap: "7",
 		inc: "7",
 		cp: "20",
-		elem: function() {
-			var hpTag = $('<p>').attr('id','ken_hp');
-			hpTag.text(this.hp);
-			var nameTag = $('<p>').attr('id', 'char_col');
-			nameTag.text("K E N");
-			var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/ken.jpg');
-			var rowTag = $('<div>').addClass('char-row').attr('id', 'char_row');
-			var divTag = $('<div>').addClass('char-box').attr('id','ken');
-			divTag.attr('hp', this.hp);
-			divTag.attr('ap', this.ap);
-			divTag.attr('inc', this.inc);
-			divTag.attr('cp', this.cp);
-
-			rowTag.append(imgTag);
-			rowTag.append(nameTag);
-			divTag.append(rowTag);
-			divTag.append(hpTag);
-
-			return divTag;
-		}
 	},
 	blanka: {
 		hp: "220",
 		ap: "5",
 		inc: "5",
 		cp: "15",
-		elem: function() {
-			var hpTag = $('<p>').attr('id','blanka_hp');
-			hpTag.text(this.hp);
-			var nameTag = $('<p>').attr('id', 'char_col');
-			nameTag.text("B L A N K A");
-			var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/blanka.jpg');
-			var rowTag = $('<div>').addClass('char-row').attr('id', 'char_row');
-			var divTag = $('<div>').addClass('char-box').attr('id','blanka');
-			divTag.attr('hp', this.hp);
-			divTag.attr('ap', this.ap);
-			divTag.attr('inc', this.inc);
-			divTag.attr('cp', this.cp);
-
-			rowTag.append(imgTag);
-			rowTag.append(nameTag);
-			divTag.append(rowTag);
-			divTag.append(hpTag);
-
-			return divTag;
-		}
 	},
 	vega: {
 		hp: "150",
 		ap: "10",
 		inc: "10",
 		cp: "25",
-		elem: function() {
-			var hpTag = $('<p>').attr('id','vega_hp');
-			hpTag.text(this.hp);
-			var nameTag = $('<p>').attr('id', 'char_col');
-			nameTag.text("V E G A");
-			var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/vega.jpg');
-			var rowTag = $('<div>').addClass('char-row').attr('id', 'char_row');
-			var divTag = $('<div>').addClass('char-box').attr('id','vega');
-			divTag.attr('hp', this.hp);
-			divTag.attr('ap', this.ap);
-			divTag.attr('inc', this.inc);
-			divTag.attr('cp', this.cp);
+	},
+	elem: function(fighter) {
+		var fighterObj;
 
-			rowTag.append(imgTag);
-			rowTag.append(nameTag);
-			divTag.append(rowTag);
-			divTag.append(hpTag);
+		if (fighter === "ryu") {fighterObj = this.ryu;}
+		else if (fighter === "ken") {fighterObj = this.ken;}
+		else if (fighter === "blanka") {fighterObj = this.blanka;}
+		else {fighterObj = this.vega;}
 
-			return divTag;
+		var hpTag = $('<p>').attr('id', fighter+'_hp');
+		hpTag.text(fighterObj.hp);
+		var nameTag = $('<p>').attr('id', 'char_col');
+
+		var name = fighter[0].toUpperCase();
+		for (var i = 1; i < fighter.length; i++) {
+			name += " " + fighter[i].toUpperCase();
 		}
+		nameTag.text(name);
+
+		var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/'+fighter+'.jpg');
+		var rowTag = $('<div>').addClass('char-row').attr('id', 'char_row');
+		var divTag = $('<div>').addClass('char-box').attr('id',fighter);
+		divTag.attr('hp', fighterObj.hp);
+		divTag.attr('ap', fighterObj.ap);
+		divTag.attr('inc', fighterObj.inc);
+		divTag.attr('cp', fighterObj.cp);
+
+		rowTag.append(imgTag);
+		rowTag.append(nameTag);
+		divTag.append(rowTag);
+		divTag.append(hpTag);	
+
+		return divTag;		
 	}
 }

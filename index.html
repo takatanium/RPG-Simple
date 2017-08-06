@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>RPG</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> -->
+  <link href="https://fonts.googleapis.com/css?family=Shojumaru" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <div class="container">
+
+    <div class="title">
+      <h2></h2>
+      <h1 class="title-text">Street Fighter RPG!</h1>
+    </div>
+
+    <div class="char">
+      <h2 class="row-text">C h a r a c t e r</h2>
+      <div class="gen-row" id="char_row">
+        <div class="char-box" id="ryu" hp="180" ap="7" inc="7" cp="20">
+          <div class="char-row" id="char_row">
+            <img class="char-img" id="img_ryu" src="assets/images/ryu.jpg">
+            <p id="char_col">R Y U</p>
+          </div>
+          <p id="ryu_hp">180</p>
+        </div>
+        <div class="char-box" id="ken" hp="160" ap="7" inc="7" cp="20">
+          <div class="char-row" id="char_row">
+            <img class="char-img" id="img_ken" src="assets/images/ken.jpg">
+            <p id="char_col">K E N</p>
+          </div>
+          <p id="ken_hp">160</p>
+        </div>
+        <div class="char-box" id="blanka" hp="220" ap="5" inc="5" cp="15">
+          <div class="char-row" id="char_row">
+            <img class="char-img" id="img_blanka" src="assets/images/blanka.jpg">
+            <p id="char_col">B L A N K A</p>
+          </div>
+          <p id="blanka_hp">220</p>
+        </div>
+        <div class="char-box" id="vega" hp="150" ap="10" inc="10" cp="25">
+          <div class="char-row" id="char_row">
+            <img class="char-img" id="img_vega" src="assets/images/vega.jpg">
+            <p id="char_col">V E G A</p>
+          </div>
+          <p id="vega_hp">150</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="enemy">
+      <h2 class="row-text">E N E M I E S</h2>
+      <div class="gen-row" id="enemy_row">
+      </div>
+    </div>
+
+    <div class="fight">
+      <h2 class="fight-text">Fight! </h2>
+      <button class="fight-btn" id="fight_btn">Attack</button>
+    </div>
+
+    <div class="defender">
+      <h2 class="row-text">D E F E N D E R</h2>
+      <div class="gen-row" id="defender_row">
+      </div>
+    </div>
+
+    <div class="info" id="info"</div>
+
+  </div>
+
+  <script src="assets/javascript/game.js"></script>
+</body>
+</html>

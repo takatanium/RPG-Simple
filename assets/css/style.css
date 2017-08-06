@@ -122,4 +122,15 @@ p {
 	margin-left: 10px;
 }
 
+#char_title {
+	padding-top: 5px;
+}
+
+#enemy_title {
+	padding-top: 35px;
+}
+
+#defender_title {
+	padding-top: 20px;
+}
 

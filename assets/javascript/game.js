@@ -9,13 +9,15 @@ $(document).ready(function(){
   	shift.toEnemy(this);
 
 		$('#enemy_row').on('click', '.char-box', function() {
-	  	defender = this.id;
+	  	// defender = this.id;
 	  	shift.toDefender(this);
 		});
 
 	});
 
 	$('#fight_btn').on('click', function() {
+		console.log(player);
+		console.log(defender);
 		if (player != "" && defender != "" && $("#"+player).attr('hp') > 0) {
 			var playEl = "#" + player;
 			var defEl = "#" + defender;
@@ -43,9 +45,6 @@ $(document).ready(function(){
 
 			action.incPlayAP(playEl, defEl);
 			action.displayHP(playEl, defEl);
-
-			// console.log("Def: " + $(defEl).attr("hp") + " " + $(defEl).attr("ap") + " " + $(defEl).attr("cp"));
-			// console.log("Play: " + $(playEl).attr("hp") + " " + $(playEl).attr("ap") + " " + $(playEl).attr("cp"));
 		}
 	});
 
@@ -57,6 +56,11 @@ var shift = {
 			if (this != fighter) {
 				$('#enemy_row').append(this);
 			}
+			else {
+				if ($("#char_row > .char-box").length > 1) {
+					player = this.id;
+				}
+			}
 		});
 	},
 
@@ -65,6 +69,8 @@ var shift = {
 			$('#enemy_row').children('div').each(function() { 
 				if (this === fighter) {
 					$('#defender_row').append(this);
+					defender = this.id;
+					// console.log(this.id);
 					action.displayInfo(player, defender, "clear");
 				}
 			});
@@ -127,10 +133,15 @@ var action = {
 		}
 		else if (status === "lost") {
 			info = "You have been defeated...<br>";
-			reset = $('<button>Reset</button>').on('click', this.reset());
+			reset = $('<button>Reset</button>').on('click', function() {
+				action.reset();
+			});
 		}
 		else if (status === "won") {
-			info = "Congratulations, you won!";
+			info = "Congratulations, you won!<br>";
+			reset = $('<button>Reset</button>').on('click', function() {
+				action.reset();
+			});
 		}
 		else if (status === "clear") {
 			info = "";

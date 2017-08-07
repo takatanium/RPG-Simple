@@ -3,13 +3,31 @@ body {
 	font-family: 'Shojumaru', cursive;
 	font-size: 14px;
 	background-image: url("../images/asanoha.png");
+	position: relative;
+}
+
+.logo {
+	position: absolute;
+	top: 0;
+	left: -55px;
+	width: 150px;
+	height: auto;
 }
 
 .container {
-	display: flex;
-	flex-direction: column;
+	position: relative;
+/*	display: flex;
+	flex-direction: column;*/
 	max-width: 640px;
 	margin: auto;
+}
+
+.main {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	top: 0;
+	left: 0;
 }
 
 h1 {
@@ -48,7 +66,9 @@ p {
 }
 
 .title {
-	height: 50px;
+	height: 60px;
+	width: 400px;
+	padding-left: 80px;
 }
 
 .char,

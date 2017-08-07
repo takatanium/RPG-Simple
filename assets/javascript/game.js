@@ -177,25 +177,21 @@ var make = {
 	ryu: {
 		hp: "180",
 		ap: "7",
-		inc: "7",
 		cp: "20",
 	},
 	ken: {
-		hp: "160",
+		hp: "180",
 		ap: "7",
-		inc: "7",
 		cp: "20",
 	},
 	blanka: {
-		hp: "220",
+		hp: "240",
 		ap: "5",
-		inc: "5",
 		cp: "15",
 	},
 	vega: {
 		hp: "150",
 		ap: "10",
-		inc: "10",
 		cp: "25",
 	},
 	elem: function(fighter) {
@@ -221,7 +217,7 @@ var make = {
 		var divTag = $('<div>').addClass('char-box').attr('id',fighter);
 		divTag.attr('hp', fighterObj.hp);
 		divTag.attr('ap', fighterObj.ap);
-		divTag.attr('inc', fighterObj.inc);
+		divTag.attr('inc', fighterObj.ap);
 		divTag.attr('cp', fighterObj.cp);
 
 		rowTag.append(imgTag);

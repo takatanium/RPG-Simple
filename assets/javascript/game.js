@@ -155,13 +155,13 @@ var action = {
 			info += "<p>" + defender + " countered for " + defCP + " damage.</p>";
 		}
 		else if (status === "lost") {
-			info = "You have been defeated...<br>";
+			info = "You have been defeated... ";
 			reset = $('<button>Reset</button>').on('click', function() {
 				action.reset();
 			});
 		}
 		else if (status === "won") {
-			info = "Congratulations, you won!<br>";
+			info = "Congratulations, you won! ";
 			reset = $('<button>Reset</button>').on('click', function() {
 				action.reset();
 			});

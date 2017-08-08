@@ -18,6 +18,7 @@ body {
 	position: relative;
 	max-width: 640px;
 	margin: auto;
+	margin-top: 10px;
 }
 
 .main {
@@ -35,9 +36,10 @@ h1 {
 }
 
 h2 {
-	font-size: 16px;
 	padding: 0;
 	margin: 0;
+	text-align: center;
+	font-size: 20px
 }
 
 img {
@@ -48,6 +50,7 @@ img {
 p {
 	text-align: left;
 	padding-left: 2px;
+	padding-right: 2px;
 	margin: 0;
 	height: 14px;
 }
@@ -77,6 +80,7 @@ p {
 
 .title-text {
 	padding-left: 18px;
+	font-size: 30px;
 }
 
 .gen-row {
@@ -90,8 +94,8 @@ p {
 .row-text {
 	width: 18px;
 	height: 150px;
-	font-size: 12px;
-	vertical-align: middle;
+	font-size: 15px;
+	margin-right: 10px;
 }
 
 .char-box {
@@ -103,7 +107,6 @@ p {
   font-size: 14px;
   margin-right: 10px;
   position: relative;
-
 }
 
 .char-content {
@@ -132,7 +135,7 @@ p {
 .stats-ap {
 	position: absolute;
 	width: 100%;
-	bottom: 3px;
+	bottom: 2px;
 	font-size: 12px;
 	text-align: center;
 	padding: 0;
@@ -160,6 +163,7 @@ p {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	margin-top: 3px;
 }
 
 #content_ryu {
@@ -187,15 +191,15 @@ p {
 }
 
 #char_title {
-	padding-top: 5px;
+	padding-top: 15px;
 }
 
 #enemy_title {
-	padding-top: 35px;
+	padding-top: 40px;
 }
 
 #defender_title {
-	padding-top: 20px;
+	padding-top: 25px;
 }
 
 /*Animations*/

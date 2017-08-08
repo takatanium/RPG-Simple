@@ -8,11 +8,9 @@ $(document).ready(function(){
 
   //choose fighter
   $('#char_row').on('click', '.char-box', function() {
-  	player = this.id;
   	shift.toEnemy(this);
 
 		$('#enemy_row').on('click', '.char-box', function() {
-	  	// defender = this.id;
 	  	shift.toDefender(this);
 		});
 
@@ -25,6 +23,7 @@ $(document).ready(function(){
 
 			//first decrement defender HP and see if still alive
 			if (action.decDefHP(playEl, defEl) > 0) {
+				//check if player still alive
 				if (action.decPlayHP(playEl, defEl) <= 0) {
 					//game over
 					action.displayInfo(playEl, defEl, "lost");	
@@ -36,15 +35,18 @@ $(document).ready(function(){
 			else {
 				//eliminate defender
 				$('#defender_row').html("");
-				action.displayInfo(playEl, defEl, "oneDown");
-			}
-
-			//check if won
-			if ($("#defender_row > .char-box").length < 1 && $("#enemy_row > .char-box").length < 1) {
-				action.displayInfo(playEl, defEl, "won");
+				defender = "";
+				//check if won
+				if ($("#defender_row > .char-box").length < 1 && $("#enemy_row > .char-box").length < 1) {
+					action.displayInfo(playEl, defEl, "won");
+				}
+				else {
+					action.displayInfo(playEl, defEl, "oneDown");
+				}
 			}
 
 			action.incPlayAP(playEl, defEl);
+			action.displayAP(playEl, defEl);
 			action.displayHP(playEl, defEl);
 		}
 	});
@@ -63,6 +65,7 @@ var shift = {
 				}
 			}
 		});
+		action.displayAttacks();
 	},
 
 	toDefender: function(fighter) {
@@ -81,7 +84,6 @@ var shift = {
 		$('#defender_row').children('div').each(function() { 
 			if (this === fighter) {
 				$('#info').append(this);
-
 			}
 		});	
 	}
@@ -120,6 +122,27 @@ var action = {
 		$(playEl+"_hp").text(playHP);
 		$(defEl+"_hp").text(defHP);
 
+	},
+	displayAP: function(playEl, defEl) {
+		var playAP = $(playEl).attr("ap");
+		var defCP = $(defEl).attr("cp");
+
+		$(playEl+"_attack").text(playAP);
+		$(defEl+"_attack").text(defCP);
+
+	},
+	displayAttacks: function() {
+		$('#char_row').children('div').each(function() { 
+			var playerAP = $(this).attr("ap");
+			$("#"+this.id+"_attack").text(playerAP);
+		});
+
+		$('#enemy_row').children('div').each(function() { 
+			var enemyCP = $(this).attr("cp");
+			$("#"+this.id+"_attack").text(enemyCP);
+		});
+
+		$('.stats-box').removeClass('stats-hover');
 	},
 	displayInfo: function(playEl, defEl, status) {
 		var info;
@@ -202,28 +225,46 @@ var make = {
 		else if (fighter === "blanka") {fighterObj = this.blanka;}
 		else {fighterObj = this.vega;}
 
-		var hpTag = $('<p>').attr('id', fighter+'_hp');
-		hpTag.text(fighterObj.hp);
+		//create/populate char row element
 		var nameTag = $('<p>').attr('id', 'char_col');
-
 		var name = fighter[0].toUpperCase();
 		for (var i = 1; i < fighter.length; i++) {
 			name += " " + fighter[i].toUpperCase();
 		}
 		nameTag.text(name);
+		var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/'+ fighter +'.jpg');
+		var rowTag = $('<div>').addClass('char-row');
+		rowTag.append(imgTag);
+		rowTag.append(nameTag);
 
-		var imgTag = $('<img>').addClass('char-img').attr('src', 'assets/images/'+fighter+'.jpg');
-		var rowTag = $('<div>').addClass('char-row').attr('id', 'char_row');
-		var divTag = $('<div>').addClass('char-box').attr('id',fighter);
+		//create/populate stats row element
+		var hpTag = $('<p>').attr('id', fighter+'_hp');
+		hpTag.text(fighterObj.hp);
+		var attTag = $('<p>').attr('id', fighter+'_attack');
+		var statRowTag = $('<div>').addClass('stats-row');
+		statRowTag.append(hpTag);
+		statRowTag.append(attTag);
+
+		var contTag = $('<div>').addClass('char-content').attr('id', 'content_'+ fighter);
+		contTag.append(rowTag);
+		contTag.append(statRowTag);
+
+		//create/populate stats box element
+		var hiddenStatsTag = $('<p>').addClass('stats-ap');
+		var hiddenStats = "AP: " + fighterObj.ap + " CP: " + fighterObj.cp;
+		hiddenStatsTag.text(hiddenStats);
+		var statsBoxTag = $('<div>').addClass('stats-box stats-hover');
+		statsBoxTag.append(hiddenStatsTag);
+
+		//create and populate character element
+		var divTag = $('<div>').addClass('char-box').attr('id', fighter);
 		divTag.attr('hp', fighterObj.hp);
 		divTag.attr('ap', fighterObj.ap);
 		divTag.attr('inc', fighterObj.ap);
 		divTag.attr('cp', fighterObj.cp);
 
-		rowTag.append(imgTag);
-		rowTag.append(nameTag);
-		divTag.append(rowTag);
-		divTag.append(hpTag);	
+		divTag.append(contTag);
+		divTag.append(statsBoxTag);	
 
 		return divTag;		
 	}

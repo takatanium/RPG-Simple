@@ -16,8 +16,6 @@ body {
 
 .container {
 	position: relative;
-/*	display: flex;
-	flex-direction: column;*/
 	max-width: 640px;
 	margin: auto;
 }
@@ -97,16 +95,47 @@ p {
 }
 
 .char-box {
-	height: 132px;
-	width: 100px;
+	width: 104px;
 	color: white;
 	text-align: center;
 	cursor: pointer; 
   cursor: hand;
   font-size: 14px;
   margin-right: 10px;
-  display: flex;
+  position: relative;
+
+}
+
+.char-content {
+	height: 132px;
+	width: 100px;
+	display: flex;
   flex-direction: column;
+  z-index: 2;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.stats-box {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	height: 132px;
+	width: 100px;
+	background-color: grey;
+	opacity: 0.9;
+	z-index: 1;
+	transition: 0.5s;
+}
+
+.stats-ap {
+	position: absolute;
+	width: 100%;
+	bottom: 3px;
+	font-size: 12px;
+	text-align: center;
+	padding: 0;
 }
 
 .char-img {
@@ -118,30 +147,37 @@ p {
 .char-row {
 	display: flex;
 	flex-direction: row;
+	min-height: 115px;
 }
 
 #char_col {
 	height: 115px;
-	width: 20px;
+	width: 15px;
 	padding-left: 4px;
 }
 
-#ryu {
+.stats-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+#content_ryu {
 	border: 2px solid black;
 	background-color: black;
 }
 
-#ken {
+#content_ken {
 	border: 2px solid red;
 	background-color: red;
 }
 
-#blanka {
+#content_blanka {
 	border: 2px solid green;
 	background-color: green;
 }
 
-#vega {
+#content_vega {
 	border: 2px solid purple;
 	background-color: purple;
 }
@@ -162,3 +198,14 @@ p {
 	padding-top: 20px;
 }
 
+/*Animations*/
+.char-box:hover > .stats-hover {
+	top: 22px;
+	transition: 0.3s;
+	transition-timing-function: ease-in-out;
+}
+.stats-hover {
+	top: 0px;
+	transition: 0.3s;
+	transition-timing-function: ease-in-out;
+}

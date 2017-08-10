@@ -1,6 +1,3 @@
-	var player = "";
-	var defender = "";
-
 $(document).ready(function(){
 
 	//load initial screen
@@ -17,6 +14,15 @@ $(document).ready(function(){
 	});
 
 	$('#fight_btn').on('click', function() {
+		var player = "";
+		if ($('#char_row > .char-box').length === 1) {
+			player = $('#char_row > .char-box').attr('id');
+		}
+		var defender = "";
+		if ($('#defender_row > .char-box').length === 1) {
+			defender = $('#defender_row > .char-box').attr('id');
+		}
+
 		if (player != "" && defender != "" && $("#"+player).attr('hp') > 0) {
 			var playEl = "#" + player;
 			var defEl = "#" + defender;
@@ -26,22 +32,22 @@ $(document).ready(function(){
 				//check if player still alive
 				if (action.decPlayHP(playEl, defEl) <= 0) {
 					//game over
-					action.displayInfo(playEl, defEl, "lost");	
+					action.displayInfo(playEl, defEl, player, defender, "lost");	
 				} 
 				else {
-					action.displayInfo(playEl, defEl, "attacking");	
+					action.displayInfo(playEl, defEl, player, defender, "attacking");	
 				}
 			}
 			else {
 				//eliminate defender
-				$('#defender_row').html("");
-				defender = "";
+				$('#defender_row').empty();
+
 				//check if won
 				if ($("#defender_row > .char-box").length < 1 && $("#enemy_row > .char-box").length < 1) {
-					action.displayInfo(playEl, defEl, "won");
+					action.displayInfo(playEl, defEl, player, defender, "won");
 				}
 				else {
-					action.displayInfo(playEl, defEl, "oneDown");
+					action.displayInfo(playEl, defEl, player, defender, "oneDown");
 				}
 			}
 
@@ -61,7 +67,6 @@ var shift = {
 			}
 			else {
 				if ($("#char_row > .char-box").length > 1) {
-					player = this.id;
 				}
 			}
 		});
@@ -73,8 +78,7 @@ var shift = {
 			$('#enemy_row').children('div').each(function() { 
 				if (this === fighter) {
 					$('#defender_row').append(this);
-					defender = this.id;
-					action.displayInfo(player, defender, "clear");
+					$('#info').empty();
 				}
 			});
 		}
@@ -144,7 +148,7 @@ var action = {
 
 		$('.stats-box').removeClass('stats-hover');
 	},
-	displayInfo: function(playEl, defEl, status) {
+	displayInfo: function(playEl, defEl, player, defender, status) {
 		var info;
 		var reset="";
 		if (status === "attacking") {
@@ -178,12 +182,8 @@ var action = {
 		$('#info').append(reset);
 	},
 	reset: function() {
-		//restore global vars
-		player = "";
-		defender = "";
-
 		//clear all char rows
-		$('.gen-row').html("");
+		$('.gen-row').empty();
 
 		//regenerate characters
 		$('#char_row').append(make.elem("ryu"));
@@ -192,7 +192,7 @@ var action = {
 		$('#char_row').append(make.elem("vega"));
 
 		//clear info 
-		$('#info').html("");
+		$('#info').empty();
 	}
 }
 
